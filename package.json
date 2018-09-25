@@ -1,0 +1,10 @@
+{
+  "name": "thuk-block",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Tom Hill <tp.hill.uk@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  }
+}
