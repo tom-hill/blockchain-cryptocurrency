@@ -3,17 +3,26 @@
  *     Created: Wed 26 Sep 2018
  */
 
+const SHA3 = require('crypto-js/sha3');
+
 class Block {
     static genesis() {
-        return new this('Genesis Timestamp', 'n0l45t-h45h', 'g3n3515-h45h', []);
+        const timestamp = 'Genesis Timestamp';
+        const lastHash = SHA3('No previous hash');
+        const hash = Block.generateHash(timestamp, lastHash, []);
+        return new this(timestamp , lastHash, hash, []);
     }
 
     static mineBlock(lastBlock, data) {
         const timestamp = +new Date();
         const lastHash = lastBlock.getHash();
-        const hash = 'newhash' //todo: update this with an actual hash
+        const hash = Block.generateHash(timestamp, lastHash, data);
 
         return new this(timestamp, lastHash, hash, data);
+    }
+
+    static generateHash(timestamp, lasthash, data) {
+        return SHA3(`${timestamp}${lasthash}${data}`);
     }
 
     constructor(timestamp, lastHash, hash, data) {
@@ -26,8 +35,8 @@ class Block {
     toString() {
         return `Block -
             Timestamp: ${this.timestamp}
-            Last Hash: ${this.lastHash.substr(0,10)}
-            Hash     : ${this.hash.substr(0, 10)}
+            Last Hash: ${this.lastHash.toString()}
+            Hash     : ${this.hash.toString()}
             Data     : ${this.data}`;
     }
 

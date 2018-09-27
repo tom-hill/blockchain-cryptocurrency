@@ -3,41 +3,47 @@
  *  Created: Wed 26 Sep 2018
  */
 
-const Block = require('../block.js');
-
+const SHA3 = require('crypto-js/sha3');
 const {
     expect
 } = require('chai');
+
+const Block = require('../block.js');
 
 describe('The Block class', function () {
     describe('The Genesis Block', function () {
         const genesis = Block.genesis();
 
         it('Should return expected data', function () {
-            expect(genesis.getTimestamp()).to.equal('Genesis Timestamp');
-            expect(genesis.getLastHash()).to.equal('n0l45t-h45h');
-            expect(genesis.getHash()).to.equal('g3n3515-h45h');
+            const timestamp = 'Genesis Timestamp';
+            const lastHash = SHA3('No previous hash');
+            const hash = Block.generateHash(timestamp, lastHash, []);
+
+            expect(genesis.getTimestamp()).to.equal(timestamp);
+            expect(genesis.getLastHash()).to.deep.equal(lastHash);
+            expect(genesis.getHash()).to.deep.equal(hash);
             expect(genesis.getData()).to.deep.equal([]);
         });
 
         it('Should always have the same values', function () {
+            // Unary + triggers a valueOf() on the new Date() instance
             const newGenesis = new Block(+new Date(), 'l45t-h45h', 'n3w-h45h', []).getGenesis();
 
             expect(newGenesis.getTimestamp()).to.equal(genesis.getTimestamp());
-            expect(newGenesis.getLastHash()).to.equal(genesis.getLastHash());
-            expect(newGenesis.getHash()).to.equal(genesis.getHash());
+            expect(newGenesis.getLastHash()).to.deep.equal(genesis.getLastHash());
+            expect(newGenesis.getHash()).to.deep.equal(genesis.getHash());
             expect(newGenesis.getData()).to.deep.equal(genesis.getData());
             expect(newGenesis.toString()).to.equal(genesis.toString());
         });
     });
 
     describe('A New Instance', function () {
-        const timestamp = +new Date(); // Unary + triggers a valueOf() on the new Date() instance
-        const lastHash = '0123456789876543210';
-        const hash = '1234567890987654321';
+        const timestamp = +new Date();
+        const lastHash = SHA3('0123456789876543210');
         const data = JSON.stringify({
             data: 'some data'
         });
+        const hash = Block.generateHash(timestamp, lastHash, data);
 
         const block = new Block(timestamp, lastHash, hash, data);
 
@@ -51,8 +57,8 @@ describe('The Block class', function () {
         it('Can describe itself with a toString() method', function () {
             expect(block.toString()).to.equal(`Block -
             Timestamp: ${timestamp}
-            Last Hash: ${lastHash.substr(0, 10)}
-            Hash     : ${hash.substr(0, 10)}
+            Last Hash: ${lastHash.toString()}
+            Hash     : ${hash.toString()}
             Data     : ${data}`);
         });
     });
@@ -63,6 +69,6 @@ describe('The Block class', function () {
 
         expect(block).to.be.instanceOf(Block);
         expect(block.getData()).to.deep.equal(data);
-        expect(block.getLastHash()).to.equal(Block.genesis().getHash());
+        expect(block.getLastHash()).to.deep.equal(Block.genesis().getHash());
     });
 });
