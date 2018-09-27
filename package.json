@@ -4,7 +4,13 @@
   "main": "index.js",
   "author": "Tom Hill <tp.hill.uk@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha"
+  },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^5.2.0",
     "nodemon": "^1.18.4"
   }
 }
