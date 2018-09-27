@@ -71,4 +71,11 @@ describe('The Block class', function () {
         expect(block.data).to.deep.equal(data);
         expect(block.lastHash).to.deep.equal(Block.genesis().hash);
     });
+
+    it('Can get the hash from a block', function() {
+        const originalBlock = Block.genesis();
+        const blockHash = Block.getBlockHash(originalBlock);
+
+        expect(originalBlock.hash).to.deep.equal(blockHash);
+    });
 });

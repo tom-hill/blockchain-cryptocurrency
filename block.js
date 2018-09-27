@@ -25,6 +25,16 @@ class Block {
         return SHA3(`${timestamp}${lasthash}${data}`);
     }
 
+    static getBlockHash(block) {
+        const {
+            timestamp,
+            lastHash,
+            data
+        } = block;
+
+        return Block.generateHash(timestamp, lastHash, data);
+    }
+
     constructor(timestamp, lastHash, hash, data) {
         this.timestamp = timestamp;
         this.lastHash = lastHash;
