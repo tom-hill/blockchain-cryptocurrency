@@ -19,20 +19,20 @@ describe('The Block class', function () {
             const lastHash = SHA3('No previous hash');
             const hash = Block.generateHash(timestamp, lastHash, []);
 
-            expect(genesis.getTimestamp()).to.equal(timestamp);
-            expect(genesis.getLastHash()).to.deep.equal(lastHash);
-            expect(genesis.getHash()).to.deep.equal(hash);
-            expect(genesis.getData()).to.deep.equal([]);
+            expect(genesis.timestamp).to.equal(timestamp);
+            expect(genesis.lastHash).to.deep.equal(lastHash);
+            expect(genesis.hash).to.deep.equal(hash);
+            expect(genesis.data).to.deep.equal([]);
         });
 
         it('Should always have the same values', function () {
             // Unary + triggers a valueOf() on the new Date() instance
             const newGenesis = new Block(+new Date(), 'l45t-h45h', 'n3w-h45h', []).getGenesis();
 
-            expect(newGenesis.getTimestamp()).to.equal(genesis.getTimestamp());
-            expect(newGenesis.getLastHash()).to.deep.equal(genesis.getLastHash());
-            expect(newGenesis.getHash()).to.deep.equal(genesis.getHash());
-            expect(newGenesis.getData()).to.deep.equal(genesis.getData());
+            expect(newGenesis.timestamp).to.equal(genesis.timestamp);
+            expect(newGenesis.lastHash).to.deep.equal(genesis.lastHash);
+            expect(newGenesis.hash).to.deep.equal(genesis.hash);
+            expect(newGenesis.data).to.deep.equal(genesis.data);
             expect(newGenesis.toString()).to.equal(genesis.toString());
         });
     });
@@ -48,10 +48,10 @@ describe('The Block class', function () {
         const block = new Block(timestamp, lastHash, hash, data);
 
         it('Returns the correct data from its getters', function () {
-            expect(block.getTimestamp()).to.equal(timestamp);
-            expect(block.getLastHash()).to.equal(lastHash);
-            expect(block.getHash()).to.equal(hash);
-            expect(block.getData()).to.equal(data);
+            expect(block.timestamp).to.equal(timestamp);
+            expect(block.lastHash).to.equal(lastHash);
+            expect(block.hash).to.equal(hash);
+            expect(block.data).to.equal(data);
         });
 
         it('Can describe itself with a toString() method', function () {
@@ -68,7 +68,7 @@ describe('The Block class', function () {
         const block = Block.mineBlock(Block.genesis(), data);
 
         expect(block).to.be.instanceOf(Block);
-        expect(block.getData()).to.deep.equal(data);
-        expect(block.getLastHash()).to.deep.equal(Block.genesis().getHash());
+        expect(block.data).to.deep.equal(data);
+        expect(block.lastHash).to.deep.equal(Block.genesis().hash);
     });
 });

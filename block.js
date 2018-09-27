@@ -15,7 +15,7 @@ class Block {
 
     static mineBlock(lastBlock, data) {
         const timestamp = +new Date();
-        const lastHash = lastBlock.getHash();
+        const lastHash = lastBlock.hash;
         const hash = Block.generateHash(timestamp, lastHash, data);
 
         return new this(timestamp, lastHash, hash, data);
@@ -38,22 +38,6 @@ class Block {
             Last Hash: ${this.lastHash.toString()}
             Hash     : ${this.hash.toString()}
             Data     : ${this.data}`;
-    }
-
-    getTimestamp() {
-        return this.timestamp;
-    }
-
-    getLastHash() {
-        return this.lastHash;
-    }
-
-    getHash() {
-        return this.hash;
-    }
-
-    getData() {
-        return this.data;
     }
 
     getGenesis() {
