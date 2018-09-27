@@ -5,7 +5,9 @@
   "author": "Tom Hill <tp.hill.uk@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "./node_modules/.bin/mocha"
+    "test": "mocha \"**/*.spec.js\"",
+    "start": "node ./app",
+    "run:dev": "nodemon ./app"
   },
   "devDependencies": {
     "chai": "^4.2.0",
@@ -14,6 +16,7 @@
     "nodemon": "^1.18.4"
   },
   "dependencies": {
-    "crypto-js": "^3.1.9-1"
+    "crypto-js": "^3.1.9-1",
+    "express": "^4.16.3"
   }
 }

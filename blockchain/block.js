@@ -8,7 +8,7 @@ const SHA3 = require('crypto-js/sha3');
 class Block {
     static genesis() {
         const timestamp = 'Genesis Timestamp';
-        const lastHash = SHA3('No previous hash');
+        const lastHash = SHA3('No previous hash').toString();
         const hash = Block.generateHash(timestamp, lastHash, []);
         return new this(timestamp , lastHash, hash, []);
     }
@@ -22,7 +22,7 @@ class Block {
     }
 
     static generateHash(timestamp, lasthash, data) {
-        return SHA3(`${timestamp}${lasthash}${data}`);
+        return SHA3(`${timestamp}${lasthash}${data}`).toString();
     }
 
     static getBlockHash(block) {

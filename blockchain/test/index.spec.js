@@ -8,9 +8,9 @@ const {
 } = require('chai');
 
 const Block = require('../block');
-const Blockchain = require('../blockchain');
+const Blockchain = require('../index');
 
-describe('The Blockchain', function () {
+describe('The blockchain', function () {
     let blockchain, blockchain2;
 
     beforeEach(function() {

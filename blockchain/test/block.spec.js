@@ -16,7 +16,7 @@ describe('The Block class', function () {
 
         it('Should return expected data', function () {
             const timestamp = 'Genesis Timestamp';
-            const lastHash = SHA3('No previous hash');
+            const lastHash = SHA3('No previous hash').toString();
             const hash = Block.generateHash(timestamp, lastHash, []);
 
             expect(genesis.timestamp).to.equal(timestamp);
@@ -39,7 +39,7 @@ describe('The Block class', function () {
 
     describe('A New Instance', function () {
         const timestamp = +new Date();
-        const lastHash = SHA3('0123456789876543210');
+        const lastHash = SHA3('0123456789876543210').toString();
         const data = JSON.stringify({
             data: 'some data'
         });
