@@ -7,6 +7,7 @@ const SHA3 = require('crypto-js/sha3');
 const {
     expect
 } = require('chai');
+const { MINE_RATE } = require('../project.consts');
 
 const Block = require('../block.js');
 
@@ -77,5 +78,33 @@ describe('The Block class', function () {
         const blockHash = Block.getBlockHash(originalBlock);
 
         expect(originalBlock.hash).to.deep.equal(blockHash);
+    });
+
+    describe('Dynamicaly controls mining difficulty', function() {
+        const data = ['some-data'];
+        let block = Block.mineBlock(Block.genesis(), data);
+
+        it('Generates a hash that matches the difficulty level', function() {
+            this.timeout(0);
+            expect(block.hash.substr(0, block.difficulty)).to.equal('0'.repeat(block.difficulty));
+        });
+
+        it('Lowers difficulty for mine rates that are too slow', function() {
+            this.timeout(0);
+            block = Block.mineBlock(block, data);
+            expect(Block.adjustDifficulty(block, block.timestamp + 360000)).to.equal(block.difficulty - 1);
+        });
+
+        it('Increases difficulty for min rates that are too fast', function() {
+            this.timeout(0);
+            block = Block.mineBlock(block, data);
+            expect(Block.adjustDifficulty(block, block.timestamp + 100)).to.equal(block.difficulty + 1);
+        });
+
+        it('Keeps difficulty the same for exact rates', function() {
+            this.timeout(0);
+            block = Block.mineBlock(block, data);
+            expect(Block.adjustDifficulty(block, block.timestamp + MINE_RATE)).to.equal(block.difficulty);
+        });
     });
 });
