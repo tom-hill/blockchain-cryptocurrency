@@ -7,7 +7,7 @@ const SHA3 = require('crypto-js/sha3');
 const {
     expect
 } = require('chai');
-const { MINE_RATE } = require('../project.consts');
+const { MINE_RATE } = require('../../project.consts');
 
 const Block = require('../block.js');
 

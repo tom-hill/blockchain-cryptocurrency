@@ -2,7 +2,7 @@
  *     Author: Tom Hill <tp.hill.uk@gmail.com>
  *     Created: Wed 26 Sep 2018
  */
-const { DIFFICULTY, MINE_RATE } = require('./project.consts');
+const { DIFFICULTY, MINE_RATE } = require('../project.consts');
 const SHA3 = require('crypto-js/sha3');
 
 class Block {
