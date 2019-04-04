@@ -7,7 +7,7 @@ const SHA3 = require('crypto-js/sha3');
 const {
     expect
 } = require('chai');
-const { MINE_RATE } = require('../../project.consts');
+const { MINE_RATE, DIFFICULTY } = require('../../project.consts');
 
 const Block = require('../block.js');
 
@@ -18,7 +18,7 @@ describe('The Block class', function () {
         it('Should return expected data', function () {
             const timestamp = 'Genesis Timestamp';
             const lastHash = SHA3('No previous hash').toString();
-            const hash = Block.generateHash(timestamp, lastHash, []);
+            const hash = Block.generateHash(timestamp, lastHash, [], 0, DIFFICULTY);
 
             expect(genesis.timestamp).to.equal(timestamp);
             expect(genesis.lastHash).to.deep.equal(lastHash);
@@ -44,9 +44,9 @@ describe('The Block class', function () {
         const data = JSON.stringify({
             data: 'some data'
         });
-        const hash = Block.generateHash(timestamp, lastHash, data);
+        const hash = Block.generateHash(timestamp, lastHash, data, 0, DIFFICULTY);
 
-        const block = new Block(timestamp, lastHash, hash, data);
+        const block = new Block(timestamp, lastHash, hash, data, 0, DIFFICULTY);
 
         it('Returns the correct data from its getters', function () {
             expect(block.timestamp).to.equal(timestamp);
@@ -57,10 +57,12 @@ describe('The Block class', function () {
 
         it('Can describe itself with a toString() method', function () {
             expect(block.toString()).to.equal(`Block -
-            Timestamp: ${timestamp}
-            Last Hash: ${lastHash.toString()}
-            Hash     : ${hash.toString()}
-            Data     : ${data}`);
+            Timestamp : ${timestamp}
+            Last Hash : ${lastHash.toString()}
+            Hash      : ${hash.toString()}
+            Data      : ${data}
+            Nonce     : ${0}
+            Difficulty: ${DIFFICULTY}`);
         });
     });
 

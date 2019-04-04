@@ -16,7 +16,7 @@ class Block {
     static genesis() {
         const timestamp = 'Genesis Timestamp';
         const lastHash = SHA3('No previous hash').toString();
-        const hash = Block.generateHash(timestamp, lastHash, []);
+        const hash = Block.generateHash(timestamp, lastHash, [], 0, DIFFICULTY);
         return new this(timestamp , lastHash, hash, [], 0, DIFFICULTY);
     }
 
@@ -57,7 +57,7 @@ class Block {
 
     /**
      * A method to get the hash for a given block
-     * @param  {block}  block The block we want the has for
+     * @param  {block}  block The block we want the hash for
      * @return {string}       The hash for the given block of data
      */
     static getBlockHash(block) {

@@ -15,13 +15,13 @@ class Transaction {
     const transaction = new this();
 
     if (amount > senderWallet.balance) {
-      console.log(`ERROR: Ammount ${amount} exceeds senders available balance ${senderWallet.balance}`);
-      return null;
+      const error = `Ammount ${amount} exceeds senders available balance ${senderWallet.balance}`;
+      throw new Error(error);
     }
 
     transaction.outputs.push(...[
       {
-        ammount: senderWallet.balance - amount,
+        amount: senderWallet.balance - amount,
         address: senderWallet.publicKey
       },
       {
