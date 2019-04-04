@@ -1,9 +1,5 @@
-/**
- *     Author: Tom Hill <tp.hill.uk@gmail.com>
- *     Created: Wed 26 Sep 2018
- */
+const ChainUtil = require('../chain-util');
 const { DIFFICULTY, MINE_RATE } = require('../project.consts');
-const SHA3 = require('crypto-js/sha3');
 
 /**
  * A class for creating/controlling blocks in a blockchain
@@ -52,7 +48,7 @@ class Block {
      * @return {string}            A hash describing the block and its data
      */
     static generateHash(timestamp, lasthash, data, nonce, difficulty) {
-        return SHA3(`${timestamp}${lasthash}${data}${nonce}${difficulty}`).toString();
+        return ChainUtil.hash(`${timestamp}${lasthash}${data}${nonce}${difficulty}`);
     }
 
     /**

@@ -15,6 +15,15 @@ class Wallet {
   }
 
   /**
+   * A method to create a signature
+   * @param  {string} data A hashed version of the data we want to sign
+   * @return {string}      The signature for the signed data
+   */
+  sign(data) {
+    return this.keyPair.sign(data);
+  }
+
+  /**
    * A method to return a string representation of the wallet instance
    * @return {string} A string representation of the wallet
    */
