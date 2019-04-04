@@ -5,7 +5,14 @@
 const { DIFFICULTY, MINE_RATE } = require('../project.consts');
 const SHA3 = require('crypto-js/sha3');
 
+/**
+ * A class for creating/controlling blocks in a blockchain
+ */
 class Block {
+    /**
+     * Generate the initial 'genesis' block of the chain.
+     * @return {block} The initial block for the chain
+     */
     static genesis() {
         const timestamp = 'Genesis Timestamp';
         const lastHash = SHA3('No previous hash').toString();
@@ -13,6 +20,12 @@ class Block {
         return new this(timestamp , lastHash, hash, [], 0, DIFFICULTY);
     }
 
+    /**
+     * A method to mine a new block and add it to the chain.
+     * @param  {block}  lastBlock The last block on the chain when work was started
+     * @param  {object} data      The data to be stored in the block
+     * @return {block}            The new block added to the chain.
+     */
     static mineBlock(lastBlock, data) {
         let hash, timestamp;
         const lastHash = lastBlock.hash;
@@ -29,10 +42,24 @@ class Block {
         return new this(timestamp, lastHash, hash, data, nonce, difficulty);
     }
 
+    /**
+     * Generate a new hash for the block based on it's content
+     * @param  {string} timestamp  The timestamp for the block
+     * @param  {string} lasthash   The hash from the last block on the chain
+     * @param  {string} data       The data for the block
+     * @param  {string} nonce      The nonce used when creating the block
+     * @param  {string} difficulty The difficulty level used when creating the block
+     * @return {string}            A hash describing the block and its data
+     */
     static generateHash(timestamp, lasthash, data, nonce, difficulty) {
         return SHA3(`${timestamp}${lasthash}${data}${nonce}${difficulty}`).toString();
     }
 
+    /**
+     * A method to get the hash for a given block
+     * @param  {block}  block The block we want the has for
+     * @return {string}       The hash for the given block of data
+     */
     static getBlockHash(block) {
         const {
             timestamp,
@@ -45,6 +72,12 @@ class Block {
         return Block.generateHash(timestamp, lastHash, data, nonce, difficulty);
     }
 
+    /**
+     * Method to adjust the difficulty level of block generation
+     * @param  {block}  lastBlock   The last block on the chain
+     * @param  {string} currentTime The current time
+     * @return {number}             The difficulty rate to be used
+     */
     static adjustDifficulty(lastBlock, currentTime) {
         let { difficulty, timestamp } = lastBlock;
         const rate = timestamp + MINE_RATE;
@@ -57,6 +90,15 @@ class Block {
         return difficulty;
     }
 
+    /**
+     * Setup the class with the data required for block generation
+     * @param {string} timestamp  The current time
+     * @param {string} lastHash   The hash of the last block on the chain
+     * @param {string} hash       The hash of the block
+     * @param {string} data       The data to be stored on the block
+     * @param {number} nonce      The current nonce
+     * @param {number} difficulty The level of difficulty for solving the block
+     */
     constructor(timestamp, lastHash, hash, data, nonce, difficulty) {
         this.timestamp = timestamp;
         this.lastHash = lastHash;
@@ -66,6 +108,10 @@ class Block {
         this.difficulty = difficulty || DIFFICULTY;
     }
 
+    /**
+     * A method to return a string representation of the current block
+     * @return {string} A string representation of the block.
+     */
     toString() {
         return `Block -
             Timestamp : ${this.timestamp}
@@ -76,6 +122,10 @@ class Block {
             Difficulty: ${this.difficulty}`;
     }
 
+    /**
+     * A method to get the original genesis block of the chain
+     * @return {block} The genesis block
+     */
     getGenesis() {
         return Block.genesis();
     }
