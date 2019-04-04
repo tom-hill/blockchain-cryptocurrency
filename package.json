@@ -7,7 +7,8 @@
   "scripts": {
     "test": "mocha \"**/*.spec.js\"",
     "start": "node ./app",
-    "run:dev": "nodemon ./app"
+    "run:dev": "nodemon ./app",
+    "run:dev-test": "nodemon dev-test.js"
   },
   "devDependencies": {
     "chai": "^4.2.0",
@@ -15,7 +16,8 @@
     "elliptic": "^6.4.1",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.4",
-    "sinon": "^6.3.5"
+    "sinon": "^6.3.5",
+    "uuid": "^3.3.2"
   },
   "dependencies": {
     "body-parser": "^1.18.3",

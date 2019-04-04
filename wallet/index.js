@@ -1,6 +1,9 @@
 const { INITIAL_BALANCE } = require('../project.consts');
-import ChainUtil from '../chain-util';
+const ChainUtil = require('../chain-util');
 
+/**
+ * Class to create and control wallets
+ */
 class Wallet {
   /**
    * Create a wallet with an initial balance and a private and public key
@@ -22,4 +25,4 @@ class Wallet {
   }
 }
 
-module.export = Wallet;
+module.exports = Wallet;
