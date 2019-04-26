@@ -3,7 +3,7 @@
  *  Created: Wed 26 Sep 2018
  */
 
-const SHA3 = require('crypto-js/sha3');
+const ChainUtil = require('../../chain-util');
 const {
     expect
 } = require('chai');
@@ -17,7 +17,7 @@ describe('The Block class', function () {
 
         it('Should return expected data', function () {
             const timestamp = 'Genesis Timestamp';
-            const lastHash = SHA3('No previous hash').toString();
+            const lastHash = ChainUtil.hash('No previous hash');
             const hash = Block.generateHash(timestamp, lastHash, [], 0, DIFFICULTY);
 
             expect(genesis.timestamp).to.equal(timestamp);
@@ -40,7 +40,7 @@ describe('The Block class', function () {
 
     describe('A New Instance', function () {
         const timestamp = +new Date();
-        const lastHash = SHA3('0123456789876543210').toString();
+        const lastHash = ChainUtil.hash('0123456789876543210');
         const data = JSON.stringify({
             data: 'some data'
         });

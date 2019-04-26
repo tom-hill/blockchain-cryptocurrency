@@ -14,6 +14,11 @@ describe('Transactions', function() {
     recipient = 'r3c1p13nt';
   });
 
+  it ('input balance is euqal to the wallet balance', function() {
+    const t = Transaction.newTransaction(wallet, recipient, amount);
+    expect(t.input.amount).to.equal(wallet.balance);
+  });
+
   it ('can create new transactions', function() {
     const t = Transaction.newTransaction(wallet, recipient, amount);
     expect(t instanceof Transaction).to.equal(true);

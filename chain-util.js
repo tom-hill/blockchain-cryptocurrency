@@ -29,7 +29,7 @@ class ChainUtil {
    * @return {string}      The hash of the data
    */
   static hash(data) {
-    return return SHA3(JSON.stringify(data)).toString();
+    return SHA3(JSON.stringify(data)).toString();
   }
 }
 

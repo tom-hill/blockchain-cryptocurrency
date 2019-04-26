@@ -11,7 +11,7 @@ class Block {
      */
     static genesis() {
         const timestamp = 'Genesis Timestamp';
-        const lastHash = SHA3('No previous hash').toString();
+        const lastHash = ChainUtil.hash('No previous hash');
         const hash = Block.generateHash(timestamp, lastHash, [], 0, DIFFICULTY);
         return new this(timestamp , lastHash, hash, [], 0, DIFFICULTY);
     }
