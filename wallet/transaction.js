@@ -35,6 +35,11 @@ class Transaction {
     return transaction;
   }
 
+  /**
+   * Sign a transation
+   * @param  {object} transaction The transaction we want to sign
+   * @param  {object} wallet      The wallet that we are signing against
+   */
   static signTransaction(transaction, wallet) {
     transaction.input = {
       timestamp: +new Date(),
@@ -42,6 +47,24 @@ class Transaction {
       address: wallet.publicKey,
       signature: wallet.sign(ChainUtil.hash(transaction.outputs))
     }
+  }
+
+  /**
+   * Verify the transaction
+   * @param  {object}  transaction The transaction object to verify
+   * @return {boolean}             A boolean represenation of the validity of the transaction
+   */
+  static verifyTransaction(transaction) {
+    const {
+      input: {
+        address: publicKey,
+        signature
+      },
+      outputs
+    } = transaction;
+    const dataHash = ChainUtil.hash(outputs);
+
+    return ChainUtil.verfiySignature(publicKey, signature, dataHash);
   }
 
   /**

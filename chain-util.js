@@ -31,6 +31,17 @@ class ChainUtil {
   static hash(data) {
     return SHA3(JSON.stringify(data)).toString();
   }
+
+  /**
+   * Verify a signature is valid
+   * @param  {string}  publicKey The public key
+   * @param  {string}  signature The signature to verify
+   * @param  {string}  dataHash  The data we expect to find if valid
+   * @return {boolean}           A true/false value representing validity
+   */
+  static verfiySignature(publicKey, signature, dataHash) {
+    return ec.keyFromPublic(publicKey, 'hex').verify(dataHash, signature);
+  }
 }
 
 module.exports = ChainUtil;

@@ -34,4 +34,11 @@ describe('Transactions', function() {
     const err = `Ammount ${wallet.balance + 100} exceeds senders available balance ${wallet.balance}`;
     expect(Transaction.newTransaction.bind(Transaction, wallet, recipient, (wallet.balance + 100))).to.throw(err);
   });
+
+  it ('can verify if a transation is valid', function() {
+    const t = Transaction.newTransaction(wallet, recipient, amount);
+    expect(Transaction.verifyTransaction(t)).to.equal(true);
+    t.outputs[0].amount = 999888777666555444333222111;
+    expect(Transaction.verifyTransaction(t)).to.equal(false);
+  });
 });
